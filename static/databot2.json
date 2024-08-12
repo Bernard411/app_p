@@ -1,0 +1,178 @@
+[
+    {
+        "tag": "greetings",
+        "patterns": [
+            "moni",
+            "muli bwanji",
+            "awiri",
+            "zikomo",
+            "masiku omwamba",
+            "zikomo kwambiri",
+            "moni boti",
+            "awiri apa",
+            "muli bwanji inu",
+            "yoh"
+        ],
+        "responses": ["Muli bwanji! Mwina ndikusamalani ndi ntchito zanu za cholera tsopano?"]
+    },
+    {
+        "tag": "symptoms",
+        "patterns": [
+            "mizindikilo ya cholera",
+            "mizindikilo ya cholera ndi ndani",
+            "mizindikilo ya cholera ndi za chiyani",
+            "mizindikilo ya cholera",
+            "mizindikilo ya cholera",
+            "mizindikilo ya cholera",
+            "kukumbukira cholera",
+            "mizindikilo ya ugonjwa wa cholera",
+            "mizindikilo ya cholera",
+            "mizindikilo ya cholera"
+        ],
+        "responses": [
+            "Mizindikilo ya cholera imakhala ndi mchere, kumwera, ndi kugwa kwa moyo. Tumizani ndi mtendere mwina ngati mukuzindikira cholera."
+        ]
+    },
+    {
+        "tag": "prevention",
+        "patterns": [
+            "kuyenera kukhala bwanji kukhala ndi cholera",
+            "kusamalira cholera",
+            "uchitsiru wa cholera",
+            "zolemba cholera",
+            "kudzipha cholera",
+            "maziko ochitetezo a cholera",
+            "kulungama kuposa cholera",
+            "zachitetezo za cholera",
+            "kupanga chidziwitso chokhala cholera",
+            "kusunga cholera"
+        ],
+        "responses": [
+            "Kutsegulira cholera, mutumize chilolezo chabwino, mutumize madzi okonda, ndi kuyendera nzeru zoyenda. Kuyambira kwa anthu kumakhala pansi pa masiku aowonjezera."
+        ]
+    },
+    {
+        "tag": "treatment",
+        "patterns": [
+            "treatment ya cholera",
+            "chitetezo cha cholera",
+            "madzirowa a cholera",
+            "kuponya cholera",
+            "cholera therapy",
+            "kutentcheredwa cholera",
+            "chilolezo cha cholera",
+            "ukusamalira cholera",
+            "matsanzo a cholera",
+            "muzikakha mmanja cholera"
+        ],
+        "responses": [
+            "Cholera inatentcheredwa ndi therapy ya kuyeretsa (zachilolezo za m'mwala) ndi, m'mizinda yopindulira, maantibayotiki. Tumizani mtendere woposa pokhala ndi mizindikilo ya cholera."
+        ]
+    },
+    {
+        "tag": "spread",
+        "patterns": [
+            "cholera inayamba bwanji",
+            "uchitsiru wa cholera",
+            "cholera transmission",
+            "cholera contagion",
+            "uchitsiru wa cholera",
+            "kuwalirana cholera",
+            "uchitsiru wa cholera",
+            "kugwilizana kwacholera",
+            "mizindikilo ya cholera",
+            "uchitsiru wa cholera"
+        ],
+        "responses": [
+            "Cholera inakwera ndi madzi ndi chakudya chimene chachuluka. Utchimo wabwino wa ulamuliro ndi masautso amapitirira kuwoneka."
+        ]
+    },
+    {
+        "tag": "typos",
+        "patterns": [
+            "mizindikilo ya cholera",
+            "mizindikilo ya cholera",
+            "mizindikilo ya cholera",
+            "kusunga cholera",
+            "cholera treatement",
+            "cholera medicashun",
+            "cholera spred",
+            "cholera contaminashun",
+            "cholera propogashun",
+            "cholera infekshun rutes"
+        ],
+        "responses": ["Ndikudabwitsa kuti mukufuna kuzichita mayankho pa mizindikilo ya cholera, kugwirizana, kutsegula, kutentcheredwa, kapena kuyendera."]
+    },
+    {
+        "tag": "causes",
+        "patterns": [
+            "cholera ikuchitiranso ntchito bwanji",
+            "uchitsiru wa cholera",
+            "mizindikilo ya cholera",
+            "cholera ikugwirizana ndi chiyani",
+            "mizindikilo ya cholera",
+            "uchitsiru wa cholera",
+            "cholera bacteria",
+            "cholera agents",
+            "cholera pathogens",
+            "cholera ikuchoka kuti"
+        ],
+        "responses": [
+            "Cholera ikuchitira ntchito ndi mzere wa Vibrio cholerae. Inayamba kudula ndi masanja ndi chakudya chimene chachuluka."
+        ]
+    },
+    {
+        "tag": "vaccine",
+        "patterns": [
+            "pali cholera vaccine",
+            "kusamalira cholera",
+            "vaccine yacholera",
+            "cholera immunization",
+            "kusunga cholera ndi vaccine",
+            "cholera shot",
+            "cholera inoculation",
+            "kusamalira cholera",
+            "vaccine ikuchokera kuti",
+            "ukuyenda vaccine ya cholera"
+        ],
+        "responses": [
+            "Ena, pali vaccine ya cholera. Inayenera kupereka kwa anthu omwe akupita kumizinda yomwe ili ndi maoutbreaks a cholera kapena kwa anthu ochokera mu mitundu yosakwana. Konsultirani wotchi wabwino wa nthenda kuti mukhale ndi zambiri zokhudza."
+        ]
+    },
+    {
+        "tag": "outbreaks",
+        "patterns": [
+            "mizindikilo ya cholera yoyamba yoyamba",
+            "epidemic ya cholera",
+            "mizindikilo ya cholera",
+            "mizindikilo ya cholera",
+            "uchitsiru wa cholera waukulu",
+            "cholera m'ma news",
+            "cholera updates",
+            "cholera yomweyo",
+            "cholera idzachitika kuti",
+            "cholera hotspots"
+        ],
+        "responses": [
+            "Mizindikilo ya cholera ikhoza kukhala kumakhala m'maofesi angapo. Kwa mizindikilo ya cholera yosayamba, chonde tembani kwa Wokongola wa Ulamuliro wa Dziko (WHO) kapena kwa wachitetezo wathu wam'madzi ochokera m'malo mwanu."
+        ]
+    },
+    {
+        "tag": "cleanwater",
+        "patterns": [
+            "pang'ono pa madzi okonda",
+            "cholera ndi madzi okonda",
+            "kusamalira cholera pa madzi",
+            "madzi okonda ku health",
+            "madzi okonda kuposa",
+            "zilongosolo za madzi",
+            "zomwezo za madzi okonda",
+            "kutsegula ku madzi okonda",
+            "madzi ambiri",
+            "cholera ndi zipatso za madzi"
+        ],
+        "responses": [
+            "Kutsegulira cholera, mutumize chilolezo chabwino, mutumize madzi okonda, ndi kuyendera nzeru zoyenda. Kuyambira kwa anthu kumakhala pansi pa masiku aowonjezera."
+        ]
+    }
+]

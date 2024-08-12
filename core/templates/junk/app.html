@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Single Access Key App</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+  <link rel="stylesheet" href="./style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <div class="view">
+    <div class="phone">
+      <div class="main">
+        <!-- Top Bar -->
+        <div class="nav">
+          <div class="brand">Plant Pest & Disease ID</div>
+          <div class="icons">
+            <div class="hamburger">
+                <div class="custom-loader"></div>
+            </div>
+          </div>
+        </div>
+        <!-- Intro -->
+        <div class="intro">
+          <p>Welcome</p>
+          <p class="sum">Identify and Manage Plant Health</p>
+        </div>
+        <!-- Button Group -->
+        <div class="button-group">
+         <a href="{% url 'scan'%}"><button class="start-id" style="color: white; text-decoration: none;">Diagnosis Form</button></a>
+          <a href="{% url 'bot' %}"><button class="learn-more" style="color: white; text-decoration: none;">chat bot</button></a>
+        </div>
+        <!-- Divider -->
+        <div class="divider"></div>
+        <!-- Bottom Bar -->
+        <div class="main-footer">
+          <p>weather data <span class="circle">0</span></p>
+          <p id="temperature">loading...</p>
+        </div>
+      </div>
+
+      <script>
+             
+        function fetchWeatherAndDate() {
+            const apiKey = 'b0497bc522524401831134643231610';
+            const location = 'Blantyre';
+
+            const weatherAPI = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${location}`;
+
+            fetch(weatherAPI)
+                .then(response => response.json())
+                .then(data => {
+                    const temperature = data.current.temp_c;
+                    const condition = data.current.condition.text;
+                    document.getElementById('temperature').textContent = `${temperature}°C, ${condition}`;
+                })
+                .catch(error => console.error('Error fetching weather data: ', error));
+
+            const currentDate = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const formattedDate = currentDate.toLocaleDateString('en-US', options);
+            document.getElementById('current-date').textContent = formattedDate;
+        }
+
+        fetchWeatherAndDate();
+    </script>
+            
+      <div class="list">
+        <!-- Top Bar -->
+        <div class="head">
+          <h1 class="title">Recent Identifications</h1>
+          <p>Today, Wednesday</p>
+        </div>
+        <ul class="history">
+          <li>
+            <div class="content">
+              Tomato Blight
+              <span class="minus">- Disease</span>
+            </div>
+            <button class="sign" style="color: black; font-weight: bold">Details</button>
+          </li>
+          <li>
+            <div class="content">
+              Aphids
+              <span class="minus">- Pest</span>
+            </div>
+            <button class="sign" style="color: black; font-weight: bold">Details</button>
+          </li>
+          <li>
+            <div class="content">
+              {% if diagnosis_result %}
+              <div class="result-container" style="color: #000000;">
+                  <h2>Diagnosis Result</h2>
+                  <p>Disease: {{ diagnosis_result.name }}</p>
+                  <p>Symptoms: {{ diagnosis_result.symptoms }}</p>
+                  <p>Risk Factors: {{ diagnosis_result.risk_factors }}</p>
+                  <p>Prevention: {{ diagnosis_result.prevention }}</p>
+                  <p>Treatment: {{ diagnosis_result.treatment }}</p>
+              </div>
+          {% endif %} <span class="minus">- Disease</span>
+            </div>
+              <button class="sign" style="color: black; font-weight: bold">Details</button>
+          </li>
+
+<style>
+  .info {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  width: 320px;
+  padding: 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  background: #509AF8;
+  border-radius: 8px;
+  box-shadow: 0px 0px 5px -3px #111;
+}
+
+.info__icon {
+  width: 20px;
+  height: 20px;
+  transform: translateY(-2px);
+  margin-right: 8px;
+}
+
+.info__icon path {
+  fill: #fff;
+}
+
+.info__title {
+  font-weight: 500;
+  font-size: 14px;
+  color: #fff;
+}
+
+.info__close {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.info__close path {
+  fill: #fff;
+}
+</style>
+           
+            
+                
+                <section id="one" class="wrapper style1">
+                    <div class="item mb-5">
+                        <div class="media">
+                            {% if predictions %}
+                            <div class="imgz">
+                              <img src="{{ url }}" class="image">
+                            </div>
+                            
+                                <div class="media-body">
+                                    <div class="intro" style="color: black;">
+                                        <h2>Crop Species & Health Status Predictions:</h2>
+                                        {% for prediction in predictions %}
+                                            <p>{{ prediction.pred }}</p>
+                                        {% endfor %}
+                                        <a class="btn btn-primary" href="{% url 'application' %}" style="text-decoration: none;">Predict Again</a>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="media-body">
+                                    <div id="output" class="mr-4">
+                                        <img src="" alt="Uploaded Image">
+                                        <div class="scan-effect"></div>
+                                    </div>
+                                    <h2>{{ title }}</h2>
+                                    <br>
+                                             
+<div class="info">
+  <div class="info__icon">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" height="24" fill="none"><path fill="#393a37" d="m12 1.5c-5.79844 0-10.5 4.70156-10.5 10.5 0 5.7984 4.70156 10.5 10.5 10.5 5.7984 0 10.5-4.7016 10.5-10.5 0-5.79844-4.7016-10.5-10.5-10.5zm.75 15.5625c0 .1031-.0844.1875-.1875.1875h-1.125c-.1031 0-.1875-.0844-.1875-.1875v-6.375c0-.1031.0844-.1875.1875-.1875h1.125c.1031 0 .1875.0844.1875.1875zm-.75-8.0625c-.2944-.00601-.5747-.12718-.7808-.3375-.206-.21032-.3215-.49305-.3215-.7875s.1155-.57718.3215-.7875c.2061-.21032.4864-.33149.7808-.3375.2944.00601.5747.12718.7808.3375.206.21032.3215.49305.3215.7875s-.1155.57718-.3215.7875c-.2061.21032-.4864.33149-.7808.3375z"></path></svg>
+  </div>
+  <div class="info__title">ResNet Trained on PlantVillage Dataset ,  Upload an image to the Django web service serving the classification model and then predict.</div>
+  <div class="info__close"><svg height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg"><path d="m15.8333 5.34166-1.175-1.175-4.6583 4.65834-4.65833-4.65834-1.175 1.175 4.65833 4.65834-4.65833 4.6583 1.175 1.175 4.65833-4.6583 4.6583 4.6583 1.175-1.175-4.6583-4.6583z" fill="#393a37"></path></svg></div>
+</div>
+<br>
+                              
+                                    <div class="intro">
+                                        <br>
+                                        <form method="post" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            
+                                            <p>
+                                                <input type="file" accept="image/*" name="myfile" id="file" onchange="loadFile(event)" required>
+                                                <input type="submit" value="Predict" class="btn btn-success mt-2">
+
+                                            </p>
+                                            {{ form }}
+                                        </form>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div><!--//media-->
+                        <script>
+                            var loadFile = function(event) {
+                                var image = document.querySelector('#output img');
+                                var scanEffect = document.querySelector('.scan-effect');
+                                image.src = URL.createObjectURL(event.target.files[0]);
+                                image.style.visibility = 'hidden'; // Hide the image to show the scan effect
+                                scanEffect.style.left = '-100%'; // Reset the scan effect position
+                                setTimeout(function() {
+                                    image.style.visibility = 'visible'; // Show the image after a delay
+                                    scanEffect.style.left = '100%'; // Start the scan effect
+                                }, 100);
+                            };
+                        </script>
+                    </div><!--//item-->
+                </section>
+            </div><!--//container-->
+        </article>
+        </ul>
+        <style>
+          .imgz {
+  height: 60px;
+}
+.btn {
+  display: inline-block;
+  font-weight: 400;
+  color: #fff;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background-color: #28a745;
+  border: 1px solid transparent;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.btn:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
+}
+
+.btn:focus, .btn:active {
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.5);
+}
+
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
+
+.imgz .image {
+  height: 100%; /* Image will take the height of the parent div */
+  width: auto;  /* Maintain the aspect ratio */
+}
+
+              .blog-post {
+                  background-color: #ffffff;
+                  border-radius: 8px;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                  margin: 20px 0;
+                  padding: 30px;
+              }
+              .blog-post-header {
+                  border-bottom: 2px solid #dee2e6;
+                  margin-bottom: 20px;
+                  padding-bottom: 10px;
+                  text-align: center;
+              }
+              .blog-post-header .title {
+                  color: #343a40;
+              }
+              .media img {
+                  border-radius: 8px;
+              }
+              .media-body .intro {
+                  margin-top: 15px;
+              }
+              .media-body .btn-primary {
+                  margin-top: 20px;
+              }
+              .thumbnail {
+                  width: 100px;
+                  height: 100px;
+                  border-radius: 50%;
+                  object-fit: cover;
+                  margin-bottom: 20px;
+              }
+              #output {
+                  width: 100%;
+                  max-width: 350px; /* Limit image width for smaller screens */
+                  height: auto;
+                  border-radius: 8px;
+                  position: relative;
+                  overflow: hidden;
+              }
+              .scan-effect {
+                  position: absolute;
+                  top: 0;
+                  left: -100%;
+                  width: 100%;
+                  height: 100%;
+                  background: linear-gradient(to right, transparent, rgba(0, 255, 0, 0.6), transparent);
+                  animation: scan 2s infinite linear;
+                  z-index: 1;
+              }
+              @keyframes scan {
+                  0% {
+                      left: -100%;
+                  }
+                  100% {
+                      left: 100%;
+                  }
+              }
+        </style>
+      </div>
+    </div>
+  </div>
+  <style>
+   
+    @import url("https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900");
+    .custom-loader {
+  width: 20px;
+  height: 20px;
+  background: #ffa600;
+  border-radius: 50px;
+  -webkit-mask: radial-gradient(circle 31px at 50% calc(100% + 13px),#000 95%,#0000) top 4px left 50%,
+    radial-gradient(circle 31px,#000 95%,#0000) center,
+    radial-gradient(circle 31px at 50% -13px,#000 95%,#0000) bottom 4px left 50%,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  -webkit-mask-repeat: no-repeat;
+  animation: cu10 1.5s infinite;
+}
+
+@keyframes cu10 {
+  0% {
+    -webkit-mask-size: 0    18px,0    18px,0    18px,auto
+  }
+
+  16.67% {
+    -webkit-mask-size: 100% 18px,0    18px,0    18px,auto
+  }
+
+  33.33% {
+    -webkit-mask-size: 100% 18px,100% 18px,0    18px,auto
+  }
+
+  50% {
+    -webkit-mask-size: 100% 18px,100% 18px,100% 18px,auto
+  }
+
+  66.67% {
+    -webkit-mask-size: 0    18px,100% 18px,100% 18px,auto
+  }
+
+  83.33% {
+    -webkit-mask-size: 0    18px,0    18px,100% 18px,auto
+  }
+
+  100% {
+    -webkit-mask-size: 0    18px,0    18px,0    18px,auto
+  }
+}
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.view {
+  min-height: 100vh;
+  background: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.phone {
+  height: 100vh; /* Full height of the viewport */
+  width: 100%;
+  /* max-width: 450px; */
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background-color: #f5f5f5;
+}
+
+.main {
+  flex: 1 1 40%;
+  background-image: url("https://cdn.dribbble.com/users/2214379/screenshots/6773430/plant-1.gif");
+  background-position: center;
+  background-size: cover;
+  color: #fff;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+}
+
+.brand {
+  font-family: 'Montserrat';
+  font-weight: 800;
+  font-size: 18px;
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+}
+
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.ham {
+  height: 2px;
+  width: 20px;
+  background: #fff;
+  border-radius: 1px;
+}
+
+.intro {
+  text-align: center;
+  font-family: 'Montserrat';
+}
+
+.intro p {
+  margin: 5px 0;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.sum {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+}
+
+.button-group button {
+  all: unset;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-family: 'Montserrat';
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.start-id {
+  background: linear-gradient(to right, #11998e, #38ef7d);
+  color: #fff;
+}
+
+.learn-more {
+  background: #9e9e9e;
+  color: #fff;
+  opacity: 0.8;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: #fff;
+}
+
+.main-footer {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Montserrat';
+  font-weight: 700;
+}
+
+.main-footer p {
+  font-weight: 500;
+  color: #fff;
+}
+
+.circle {
+  background-color: #dd2c00;
+  border-radius: 100%;
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+.list {
+  flex: 1 1 60%;
+  background: #fff;
+  padding: 20px;
+  overflow-y: auto;
+  font-family: 'Montserrat';
+}
+
+.head {
+  margin-bottom: 10px;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.head p {
+  color: #9e9e9e;
+}
+
+.history {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.history li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #e0e0e0;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.content {
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.minus {
+  color: #ff3d00;
+  font-weight: 500;
+}
+
+.history button {
+  all: unset;
+  padding: 10px;
+  width: 60px;
+  text-align: center;
+  border-radius: 5px;
+  font-family: 'Montserrat';
+  font-weight: 500;
+  font-size: 12px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.sign {
+  background: linear-gradient(to right, #11998e, #38ef7d);
+  color: black;
+}
+
+/* @media only screen and (min-width: 600px) {
+  .view {
+    display: none;
+  }
+} */
+
+  </style>
+</body>
+</html>

@@ -1,0 +1,57 @@
+[
+    {
+        "model": "core.disease",
+        "pk": 1,
+        "fields": {
+            "name": "Leaf Spot Disease",
+            "symptoms": "Yellow spots on leaves",
+            "risk_factors": "High humidity",
+            "prevention": "Keep leaves dry",
+            "treatment": "Fungicide"
+        }
+    },
+    {
+        "model": "core.disease",
+        "pk": 2,
+        "fields": {
+            "name": "Blight",
+            "symptoms": "Brown spots on leaves, wilting",
+            "risk_factors": "Wet conditions",
+            "prevention": "Avoid overhead watering",
+            "treatment": "Remove infected plants"
+        }
+    },
+    {
+        "model": "core.disease",
+        "pk": 3,
+        "fields": {
+            "name": "Root Rot",
+            "symptoms": "Yellow leaves, soft stems",
+            "risk_factors": "Poor drainage",
+            "prevention": "Improve soil drainage",
+            "treatment": "Fungicide"
+        }
+    },
+    {
+        "model": "core.disease",
+        "pk": 4,
+        "fields": {
+            "name": "Powdery Mildew",
+            "symptoms": "White powdery spots on leaves",
+            "risk_factors": "High humidity, poor air circulation",
+            "prevention": "Ensure good air circulation",
+            "treatment": "Fungicide spray"
+        }
+    },
+    {
+        "model": "core.disease",
+        "pk": 5,
+        "fields": {
+            "name": "Drought Stress",
+            "symptoms": "Brown, dry leaves, wilting",
+            "risk_factors": "Lack of water",
+            "prevention": "Regular watering",
+            "treatment": "Increase watering"
+        }
+    }
+]

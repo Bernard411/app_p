@@ -1,0 +1,453 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Single Access Key App</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap">
+  <link rel="stylesheet" href="./style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <style>
+    body{
+      font-family: Poppins;
+    }
+  </style>
+  <div class="view">
+    <div class="phone">
+      <div class="main">
+        <!-- Top Bar -->
+        <div class="nav">
+          <div class="brand">Plant Pest & Disease ID</div>
+          <div class="icons">
+            <div class="hamburger">
+                <div class="custom-loader"></div>
+            </div>
+          </div>
+        </div>
+        <!-- Intro -->
+        <div class="intro">
+          <p>Welcome</p>
+          <p class="sum">Identify and Manage Plant Health</p>
+        </div>
+        <!-- Button Group -->
+        <div class="button-group">
+          <a href="{% url 'application'%}"><button class="start-id" style="color: white; text-decoration: none;">Home</button></a>
+           <a href="{% url 'bot' %}"><button class="learn-more" style="color: white; text-decoration: none;">chat bot</button></a>
+         </div>
+         <!-- Divider -->
+         <div class="divider"></div>
+         <!-- Bottom Bar -->
+         <div class="main-footer">
+           <p>weather data <span class="circle">0</span></p>
+           <p id="temperature">loading...</p>
+         </div>
+       </div>
+ 
+       <script>
+              
+         function fetchWeatherAndDate() {
+             const apiKey = 'b0497bc522524401831134643231610';
+             const location = 'Blantyre';
+ 
+             const weatherAPI = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${location}`;
+ 
+             fetch(weatherAPI)
+                 .then(response => response.json())
+                 .then(data => {
+                     const temperature = data.current.temp_c;
+                     const condition = data.current.condition.text;
+                     document.getElementById('temperature').textContent = `${temperature}°C, ${condition}`;
+                 })
+                 .catch(error => console.error('Error fetching weather data: ', error));
+ 
+             const currentDate = new Date();
+             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+             const formattedDate = currentDate.toLocaleDateString('en-US', options);
+             document.getElementById('current-date').textContent = formattedDate;
+         }
+ 
+         fetchWeatherAndDate();
+     </script>
+      <div class="list">
+        <!-- Top Bar -->
+        <div class="head">
+          <h1 class="title">Recent Identifications</h1>
+          <p>Today, Wednesday</p>
+        </div>
+        <ul class="history">
+        
+        
+        </ul>
+       
+<style>
+  .container {
+                      display: flex;
+                      justify-content: center;
+                      align-items: flex-start;
+                      gap: 20px;
+                      padding: 20px;
+                  }
+                  .form-container, .result-container {
+                      background: white;
+                      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                      border-radius: 5px;
+                      padding: 20px;
+                      flex: 1;
+                      max-width: 45%;
+                  }
+                  .form-container form p, .result-container p {
+                      margin-bottom: 15px;
+                  }
+                  label {
+                      display: block;
+                      margin-bottom: 5px;
+                      font-weight: bold;
+                      color: #000000;
+                  }
+                  input[type="text"],
+                  input[type="checkbox"] {
+                      width: calc(100% - 22px);
+                      padding: 10px;
+                      margin-bottom: 10px;
+                      border: 1px solid #ccc;
+                      border-radius: 5px;
+                      color: #000000;
+                  }
+                  input[type="checkbox"] {
+                      width: auto;
+                      margin-left: 10px;
+                      color: #000000;
+                  }
+                  .buttton {
+                      display: block;
+                      width: 100%;
+                      padding: 10px;
+                      background: #02020a;
+                      color: white;
+                      border: none;
+                      border-radius: 5px;
+                      cursor: pointer;
+                      font-size: 16px;
+                  }
+                  .buttton:hover {
+                      background: #45a049;
+                  }
+                  .result-container h2 {
+                      color: #4CAF50;
+                  }
+</style>
+{% if diagnosis_result %}
+<div class="result-container" style="color: #000000;">
+    <h2>Diagnosis Result</h2>
+    <p>Disease: {{ diagnosis_result.name }}</p>
+    <p>Symptoms: {{ diagnosis_result.symptoms }}</p>
+    <p>Risk Factors: {{ diagnosis_result.risk_factors }}</p>
+    <p>Prevention: {{ diagnosis_result.prevention }}</p>
+    <p>Treatment: {{ diagnosis_result.treatment }}</p>
+</div>
+{% endif %}
+
+        <div class="form-ckontainer" style="margin: 10px; margin-top: 20px;">
+          <form method="post" width: 100%;">
+              {% csrf_token %}
+              <p>
+                  <label for="leaf_color">Leaf Color</label>
+                  <input type="text" id="leaf_color" name="leaf_color" required>
+              </p>
+              <p>
+                  <label for="leaf_shape">Leaf Shape</label>
+                  <input type="text" id="leaf_shape" name="leaf_shape" required>
+              </p>
+              <p>
+                  <label for="spots_on_leaves">Spots on Leaves</label>
+                  <input type="checkbox" id="spots_on_leaves" name="spots_on_leaves">
+              </p>
+              <p>
+                  <label for="wilting">Wilting</label>
+                  <input type="checkbox" id="wilting" name="wilting">
+              </p>
+              <p>
+                  <label for="mold_growth">Mold Growth</label>
+                  <input type="checkbox" id="mold_growth" name="mold_growth">
+              </p>
+              <p>
+                  <label for="stem_condition">Stem Condition</label>
+                  <input type="text" id="stem_condition" name="stem_condition">
+              </p>
+              <!-- Add more fields as necessary -->
+              <button class="buttton" type="submit">Diagnose</button>
+          </form>
+      </div>
+
+
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+  <style>
+ 
+          
+ 
+    @import url("https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900");
+    .custom-loader {
+  width: 20px;
+  height: 20px;
+  background: #ffa600;
+  border-radius: 50px;
+  -webkit-mask: radial-gradient(circle 31px at 50% calc(100% + 13px),#000 95%,#0000) top 4px left 50%,
+    radial-gradient(circle 31px,#000 95%,#0000) center,
+    radial-gradient(circle 31px at 50% -13px,#000 95%,#0000) bottom 4px left 50%,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  -webkit-mask-repeat: no-repeat;
+  animation: cu10 1.5s infinite;
+}
+
+@keyframes cu10 {
+  0% {
+    -webkit-mask-size: 0    18px,0    18px,0    18px,auto
+  }
+
+  16.67% {
+    -webkit-mask-size: 100% 18px,0    18px,0    18px,auto
+  }
+
+  33.33% {
+    -webkit-mask-size: 100% 18px,100% 18px,0    18px,auto
+  }
+
+  50% {
+    -webkit-mask-size: 100% 18px,100% 18px,100% 18px,auto
+  }
+
+  66.67% {
+    -webkit-mask-size: 0    18px,100% 18px,100% 18px,auto
+  }
+
+  83.33% {
+    -webkit-mask-size: 0    18px,0    18px,100% 18px,auto
+  }
+
+  100% {
+    -webkit-mask-size: 0    18px,0    18px,0    18px,auto
+  }
+}
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.view {
+  min-height: 100vh;
+  background: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.phone {
+  height: 100vh; /* Full height of the viewport */
+  width: 100%;
+  /* max-width: 450px; */
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background-color: #f5f5f5;
+}
+
+.main {
+  flex: 1 1 40%;
+  background-image: url("https://cdn.dribbble.com/users/2214379/screenshots/6773430/plant-1.gif");
+  background-position: center;
+  background-size: cover;
+  color: #fff;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+}
+
+.brand {
+  font-family: 'Montserrat';
+  font-weight: 800;
+  font-size: 18px;
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+}
+
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.ham {
+  height: 2px;
+  width: 20px;
+  background: #fff;
+  border-radius: 1px;
+}
+
+.intro {
+  text-align: center;
+  font-family: 'Montserrat';
+}
+
+.intro p {
+  margin: 5px 0;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.sum {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+}
+
+.button-group button {
+  all: unset;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-family: 'Montserrat';
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.start-id {
+  background: linear-gradient(to right, #11998e, #38ef7d);
+  color: #fff;
+}
+
+.learn-more {
+  background: #9e9e9e;
+  color: #fff;
+  opacity: 0.8;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: #fff;
+}
+
+.main-footer {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Montserrat';
+  font-weight: 700;
+}
+
+.main-footer p {
+  font-weight: 500;
+  color: #fff;
+}
+
+.circle {
+  background-color: #dd2c00;
+  border-radius: 100%;
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+.list {
+  flex: 1 1 60%;
+  background: #fff;
+  padding: 20px;
+  overflow-y: auto;
+  font-family: 'Montserrat';
+}
+
+.head {
+  margin-bottom: 10px;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.head p {
+  color: #9e9e9e;
+}
+
+.history {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.history li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #e0e0e0;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.content {
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.minus {
+  color: #ff3d00;
+  font-weight: 500;
+}
+
+.history button {
+  all: unset;
+  padding: 10px;
+  width: 60px;
+  text-align: center;
+  border-radius: 5px;
+  font-family: 'Montserrat';
+  font-weight: 500;
+  font-size: 12px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.sign {
+  background: linear-gradient(to right, #11998e, #38ef7d);
+  color: black;
+}
+
+/* @media only screen and (min-width: 600px) {
+  .view {
+    display: none;
+  }
+} */
+
+  </style>
+</body>
+</html>

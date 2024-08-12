@@ -1,0 +1,536 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Single Access Key App</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap">
+  <link rel="stylesheet" href="./style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <style>
+    title{
+      font-family: Poppins;
+    }
+  </style>
+  <div class="view">
+    <div class="phone">
+      <div class="main">
+        <!-- Top Bar -->
+        <div class="nav">
+          <div class="brand">Plant Pest & Disease ID</div>
+          <div class="icons">
+            <div class="hamburger">
+                <div class="custom-loader"></div>
+            </div>
+          </div>
+        </div>
+        <!-- Intro -->
+        
+        <div class="button-group">
+          <a href="{% url 'scan'%}"><button class="start-id" style="color: white; text-decoration: none;">Diagnosis Form</button></a>
+           <a href="{% url 'application' %}"><button class="learn-more" style="color: white; text-decoration: none;">Home</button></a>
+         </div>
+         <!-- Divider -->
+         <div class="divider"></div>
+         <!-- Bottom Bar -->
+         <div class="main-footer">
+           <p>weather data <span class="circle">0</span></p>
+           <p id="temperature">loading...</p>
+         </div>
+       </div>
+ 
+       <script>
+              
+         function fetchWeatherAndDate() {
+             const apiKey = 'b0497bc522524401831134643231610';
+             const location = 'Blantyre';
+ 
+             const weatherAPI = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${location}`;
+ 
+             fetch(weatherAPI)
+                 .then(response => response.json())
+                 .then(data => {
+                     const temperature = data.current.temp_c;
+                     const condition = data.current.condition.text;
+                     document.getElementById('temperature').textContent = `${temperature}°C, ${condition}`;
+                 })
+                 .catch(error => console.error('Error fetching weather data: ', error));
+ 
+             const currentDate = new Date();
+             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+             const formattedDate = currentDate.toLocaleDateString('en-US', options);
+             document.getElementById('current-date').textContent = formattedDate;
+         }
+ 
+         fetchWeatherAndDate();
+     </script>
+      <div class="list">
+        <!-- Top Bar -->
+        
+        <ul class="history">
+          <div class="col-md-12">
+            <div id="chat-container">
+                <div class="header-container" style="background-color: #031117;">
+                    <h2>Plant Doctor Bot(EXPERIMENTAL)</h2>
+                    <span class="close-button">&#10006;</span>
+                </div>
+                <div id="chat-wrapper" style="height: 300px; background-color: whitesmoke;"></div>
+                <div class="input-container" style="background-color: whitesmoke;">
+                    <input type="text" id="user-input" placeholder="Type your clop desease-related question...">
+                    <button id="send-button" class="send-button  mx-1" style="font-weight: bold;"><img src="{% static 'h.svg' %}" style="width: 30px; height: 30px;"></button>
+                    <!-- Button for voice input -->
+                    <button id="voice-input-button" class="send-button bg-light mx-1" style="font-weight: bold;"><img src="{% static 'c.svg' %}" style="width: 30px; height: 30px;"></button>
+                    <button id="language-switch-button" class="send-button bg-light mx-1" style="font-weight: bold;"><img src="{% static 'b.svg' %}" style="width: 30px; height: 30px;"></button>
+                   
+                </div>
+                
+            </div>
+        </div>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <style>
+ 
+    @import url("https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900");
+    .custom-loader {
+  width: 20px;
+  height: 20px;
+  background: #ffa600;
+  border-radius: 50px;
+  -webkit-mask: radial-gradient(circle 31px at 50% calc(100% + 13px),#000 95%,#0000) top 4px left 50%,
+    radial-gradient(circle 31px,#000 95%,#0000) center,
+    radial-gradient(circle 31px at 50% -13px,#000 95%,#0000) bottom 4px left 50%,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  -webkit-mask-repeat: no-repeat;
+  animation: cu10 1.5s infinite;
+}
+
+@keyframes cu10 {
+  0% {
+    -webkit-mask-size: 0    18px,0    18px,0    18px,auto
+  }
+
+  16.67% {
+    -webkit-mask-size: 100% 18px,0    18px,0    18px,auto
+  }
+
+  33.33% {
+    -webkit-mask-size: 100% 18px,100% 18px,0    18px,auto
+  }
+
+  50% {
+    -webkit-mask-size: 100% 18px,100% 18px,100% 18px,auto
+  }
+
+  66.67% {
+    -webkit-mask-size: 0    18px,100% 18px,100% 18px,auto
+  }
+
+  83.33% {
+    -webkit-mask-size: 0    18px,0    18px,100% 18px,auto
+  }
+
+  100% {
+    -webkit-mask-size: 0    18px,0    18px,0    18px,auto
+  }
+}
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.view {
+  min-height: 100vh;
+  background: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.phone {
+  height: 100vh; /* Full height of the viewport */
+  width: 100%;
+  /* max-width: 450px; */
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background-color: #f5f5f5;
+}
+
+.main {
+  flex: 1 1 40%;
+  background-image: url("https://cdna.artstation.com/p/assets/images/images/023/036/612/original/astrid-rotelli-hnet-image-1.gif?1577817650");
+  background-position: center;
+  background-size: cover;
+  color: #fff;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+}
+
+.brand {
+  font-family: 'Montserrat';
+  font-weight: 800;
+  font-size: 18px;
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+}
+
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.ham {
+  height: 2px;
+  width: 20px;
+  background: #fff;
+  border-radius: 1px;
+}
+
+.intro {
+  text-align: center;
+  font-family: 'Montserrat';
+}
+
+.intro p {
+  margin: 5px 0;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.sum {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+}
+
+.button-group button {
+  all: unset;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-family: 'Montserrat';
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.start-id {
+  background: linear-gradient(to right, #11998e, #38ef7d);
+  color: #fff;
+}
+
+.learn-more {
+  background: #9e9e9e;
+  color: #fff;
+  opacity: 0.8;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: #fff;
+}
+
+.main-footer {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Montserrat';
+  font-weight: 700;
+}
+
+.main-footer p {
+  font-weight: 500;
+  color: #fff;
+}
+
+.circle {
+  background-color: #dd2c00;
+  border-radius: 100%;
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+.list {
+  flex: 1 1 60%;
+  background: #fff;
+  padding: 20px;
+  overflow-y: auto;
+  font-family: 'Montserrat';
+}
+
+.head {
+  margin-bottom: 10px;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.head p {
+  color: #9e9e9e;
+}
+
+.history {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.history li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #e0e0e0;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.content {
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.minus {
+  color: #ff3d00;
+  font-weight: 500;
+}
+
+.history button {
+  all: unset;
+  padding: 10px;
+  width: 60px;
+  text-align: center;
+  border-radius: 5px;
+  font-family: 'Montserrat';
+  font-weight: 500;
+  font-size: 12px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.sign {
+  background: linear-gradient(to right, #11998e, #38ef7d);
+  color: black;
+}
+
+/* @media only screen and (min-width: 600px) {
+  .view {
+    display: none;
+  }
+} */
+
+
+.header-container {
+    
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 10px;
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-container h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.close-button {
+    color: #ffffff;
+    cursor: pointer;
+}
+
+#chat-wrapper {
+    max-height: 500px;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.chat-conversation {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.user-message {
+    justify-content: flex-end;
+}
+
+.user-message p {
+    background-color: #00aced;
+    color: #ffffff;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 0;
+    max-width: 80%;
+    word-wrap: break-word;
+}
+
+.bot-message p {
+    background-color: whitesmoke;
+    color: #000000;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 0;
+    max-width: 80%;
+    word-wrap: break-word;
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+#user-input {
+    flex: 1;
+    padding: 8px;
+    border-radius: 5px;
+    border: none;
+}
+
+.send-button {
+
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+
+  </style>
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+                        
+<script>
+    $(document).ready(function () {
+        var choleraIntents = []; // Define the array to store intents for English
+        var choleraIntentsChichewa = []; // Define the array to store intents for Chichewa
+        var currentLanguage = 'english'; // Default language is English
+
+        // Load English cholera intents from JSON file
+        $.getJSON("/static/c.json", function (data) {
+            choleraIntents = data;
+        });
+
+        // Load Chichewa cholera intents from JSON file
+        $.getJSON("/static/databot2.json", function (data) {
+            choleraIntentsChichewa = data;
+        });
+
+        // Language switch button click event
+        $('#language-switch-button').click(function() {
+            currentLanguage = currentLanguage === 'english' ? 'chichewa' : 'english';
+        });
+
+        function processUserMessage(userMessage) {
+            var matchedIntent = null;
+            var intents = currentLanguage === 'english' ? choleraIntents : choleraIntentsChichewa;
+
+            for (var i = 0; i < intents.length; i++) {
+                var patterns = intents[i].patterns;
+                for (var j = 0; j < patterns.length; j++) {
+                    var pattern = patterns[j];
+                    if (userMessage.toLowerCase().includes(pattern)) {
+                        matchedIntent = intents[i];
+                        break;
+                    }
+                }
+                if (matchedIntent) {
+                    break;
+                }
+            }
+
+            var defaultBotResponse = "I'm sorry, I couldn't understand your question. Can you please rephrase or provide more details?";
+            var chichewaBotResponse = "Ndikudabwitsa, sindikufuna kuchita kumvetsa mwambo wanu. Mungakhale wochita kuthandiza ndikufufuza kapena kusankha zambiri?";
+            var botResponse = currentLanguage === 'english' ? defaultBotResponse : chichewaBotResponse;
+
+            if (matchedIntent) {
+                var responses = matchedIntent.responses;
+                botResponse = responses[Math.floor(Math.random() * responses.length)];
+            }
+
+            setTimeout(function () {
+                $("<div class='chat-conversation bot-message'></div>")
+                    .html("<p>" + botResponse + "</p>")
+                    .appendTo("#chat-wrapper");
+                $("#chat-wrapper").scrollTop($("#chat-wrapper")[0].scrollHeight);
+            }, 500);
+        }
+
+        // Send user message on button click
+        $("#send-button").click(function () {
+            sendMessage();
+        });
+
+        // Send user message on Enter key press
+        $("#user-input").keypress(function (event) {
+            if (event.which === 13) {
+                sendMessage();
+            }
+        });
+
+        // Voice input functionality
+        const recognition = new webkitSpeechRecognition() || new SpeechRecognition();
+        recognition.lang = 'en-US';
+
+        $("#voice-input-button").click(function () {
+            recognition.start();
+        });
+
+        recognition.onresult = function (event) {
+            const result = event.results[0][0].transcript;
+            $("#user-input").val(result);
+            sendMessage();
+        };
+
+        function sendMessage() {
+            var userMessage = $("#user-input").val();
+            if (userMessage.trim() !== "") {
+                $("<div class='chat-conversation user-message'></div>")
+                    .html("<p>" + userMessage + "</p>")
+                    .appendTo("#chat-wrapper");
+                $("#user-input").val("");
+                $("#chat-wrapper").scrollTop($("#chat-wrapper")[0].scrollHeight);
+                processUserMessage(userMessage);
+            }
+        }
+    });
+</script>
+
+</html>
