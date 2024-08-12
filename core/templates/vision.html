@@ -1394,169 +1394,35 @@
                         </div>
                     </header>
                     <main id="main" class="md:min-h-main-desc min-h-main-mob">
-                        <section class="flex ask-botanist-form_form__hrW6n">
-                            <div class="w-full px-[0.5rem] mx-auto xl:max-w-[1320px] lg:max-w-[1140px] max-w-[960px]">
-                                <div>
-                                    <div class="md:flex hidden" itemscope="" itemtype="http://schema.org/BreadcrumbList">
-                                        <div class="flex items-center justify-center text-sub text-textSub font-medium">
-                                            <span itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
-                                                <a itemprop="item" title="PlantIn" href="/">Plant vilage </a>
-                                                <meta itemprop="name" content="PlantIn">
-                                                <meta itemprop="position" content="1">
-                                            </span>
-                                            <div class="px-[0.5rem]">
-                                                <svg class="-rotate-90 stroke-textSub" width="11" height="7" viewBox="0 0 11 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M10 1.25L5.91667 5.33333L1.83333 1.25" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                </svg>
-                                            </div>
-                                        </div>
-                                        <div class="flex items-center justify-center text-sub text-textSub font-medium">
-                                            <span itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
-                                                <a itemprop="item" title="Ask the Botanist" href="/ask-the-botanist">machine learning</a>
-                                                <meta itemprop="name" content="Ask the Botanist">
-                                                <meta itemprop="position" content="2">
-                                            </span>
-                                            <div class="px-[0.5rem]">
-                                                <svg class="-rotate-90 stroke-textSub" width="11" height="7" viewBox="0 0 11 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M10 1.25L5.91667 5.33333L1.83333 1.25" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                </svg>
-                                            </div>
-                                        </div>
-                                        <div class="flex items-center justify-center text-sub text-textSub font-medium text-primary font-semibold">
-                                            <span itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
-                                                Fill the form<meta itemprop="name" content="Fill the form">
-                                                <meta itemprop="position" content="3">
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <form method="post" enctype="multipart/form-data">
-                                        {% csrf_token %}
-                                        <div class="ask-botanist-form_form__content__fZKV3">
-                                            <h1 class="md:text-32 text-24 font-bold text-center md:mt-7 mt-0 md:mb-10 mb-8">Fill out the form</h1>
-                                            
-                                            {% if predictions %}
-                                                <img width="500" src="{{ url }}" class="mr-4">
-                                                <div class="media-body">
-                                                    <div class="intro" style="color: black;">
-                                                        <h2>Crop Species & Health Status Predictions:</h2>
-                                                        {% for prediction in predictions %}
-                                                            <p>{{ prediction.pred }}</p>
-                                                        {% endfor %}
-                                                        <a class="btn btn-primary" href="{% url 'datasets' %}">Predict Again</a>
-                                                    </div>
-                                                </div>
-                                            {% else %}
-                                                        
-                                            <label>
-                                                <div class="ask-botanist-form_photoInput__7xSdu">
-                                                    <div class="ask-botanist-form_photoInput__header__LzHq6">
-                                                        <p class="ask-botanist-form_form__label__NpsR6">
-                                                            Add photos<span class="ask-botanist-form_form__requiredSign__KfmKe">*</span>
-                                                        </p>
-                                                        <div class="input_input__tip__NyDMy">
-                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M2 11.999C2 6.48002 6.48 1.99902 12 1.99902C17.53 1.99902 22 6.48002 22 11.999C22 17.52 17.53 21.999 12 21.999C6.48 21.999 2 17.52 2 11.999ZM12.0577 17.1087C12.5356 17.1087 12.9231 16.723 12.9231 16.2472C12.9231 15.7713 12.5356 15.3856 12.0577 15.3856C11.5797 15.3856 11.1923 15.7713 11.1923 16.2472C11.1923 16.723 11.5797 17.1087 12.0577 17.1087ZM12 8.37825C11.1078 8.37825 10.3846 9.09828 10.3846 9.98649V10.5609C10.3846 10.9415 10.0747 11.2501 9.69231 11.2501C9.30996 11.2501 9 10.9415 9 10.5609V9.98649C9 8.33696 10.3431 6.99976 12 6.99976C13.6569 6.99976 15 8.33696 15 9.98649V10.1259C15 10.9549 14.6692 11.7501 14.0803 12.3363L12.4895 13.9201C12.2192 14.1893 11.7808 14.1893 11.5105 13.9201C11.2401 13.6509 11.2401 13.2145 11.5105 12.9453L13.1012 11.3616C13.4304 11.0339 13.6154 10.5893 13.6154 10.1259V9.98649C13.6154 9.09828 12.8922 8.37825 12 8.37825Z" fill="#04BF94" fill-opacity="0.5"></path>
-                                                            </svg>
-                                                        </div>
-                                                    </div>
-                                                    <div class="ask-botanist-form_photoInput__container__XojT7">
-                                                        <div class="ask-botanist-form_photoInput__icon__24lqd">
-                                                            <span style="box-sizing:border-box;display:inline-block;overflow:hidden;width:initial;height:initial;background:none;opacity:1;border:0;margin:0;padding:0;position:relative;max-width:100%">
-                                                                <span style="box-sizing:border-box;display:block;width:initial;height:initial;background:none;opacity:1;border:0;margin:0;padding:0;max-width:100%">
-                                                                    <img style="display:block;max-width:100%;width:initial;height:initial;background:none;opacity:1;border:0;margin:0;padding:0" alt="" aria-hidden="true" src="data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%2772%27%20height=%2772%27/%3e">
-                                                                </span>
-                                                                <img alt="Add Photo" src="{% static 'add-photo.svg' %}" decoding="async" data-nimg="intrinsic" style="position:absolute;top:0;left:0;bottom:0;right:0;box-sizing:border-box;padding:0;border:none;margin:auto;display:block;width:0;height:0;min-width:100%;max-width:100%;min-height:100%;max-height:100%">
-                                                                <noscript>
-                                                                    <img alt="Add Photo" srcSet="" src="{% static 'add-photo.svg' %}" decoding="async" data-nimg="intrinsic" style="position:absolute;top:0;left:0;bottom:0;right:0;box-sizing:border-box;padding:0;border:none;margin:auto;display:block;width:0;height:0;min-width:100%;max-width:100%;min-height:100%;max-height:100%" loading="lazy"/>
-                                                                </noscript>
-                                                            </span>
-                                                        </div>
-                                                        <p class="ask-botanist-form_photoInput__caption__NWrv2">Drag &amp;drop your photo here</p>
-                                                        <input type="file" class="ask-botanist-form_photoInput__input__LwNvI" accept="image/png, image/jpg, image/jpeg" multiple="" name="myfile" id="file" onchange="loadFile(event)">
-                                                    </div>
-                                                </div>
-                                            </label>
-                                            {% endif %}
-                                            <ul class="ask-botanist-form_form__downloadedImages__UfQHq"></ul>
-                                            <center>
-                                            <div class="spinner" style="margin-bottom: 10px; margin-top: 10px;">
-                                                <div></div>
-                                                <div></div>
-                                                <div></div>
-                                                <div></div>
-                                                <div></div>
-                                                <div></div>
-                                                </div>
-                                            </center>
-                                                <style>
-                                                    .spinner {
- width: 44px;
- height: 44px;
- animation: spinner-y0fdc1 2s infinite ease;
- transform-style: preserve-3d;
-}
-
-.spinner > div {
- background-color: rgba(0,77,255,0.2);
- height: 100%;
- position: absolute;
- width: 100%;
- border: 2px solid #004dff;
-}
-
-.spinner div:nth-of-type(1) {
- transform: translateZ(-22px) rotateY(180deg);
-}
-
-.spinner div:nth-of-type(2) {
- transform: rotateY(-270deg) translateX(50%);
- transform-origin: top right;
-}
-
-.spinner div:nth-of-type(3) {
- transform: rotateY(270deg) translateX(-50%);
- transform-origin: center left;
-}
-
-.spinner div:nth-of-type(4) {
- transform: rotateX(90deg) translateY(-50%);
- transform-origin: top center;
-}
-
-.spinner div:nth-of-type(5) {
- transform: rotateX(-90deg) translateY(50%);
- transform-origin: bottom center;
-}
-
-.spinner div:nth-of-type(6) {
- transform: translateZ(22px);
-}
-
-@keyframes spinner-y0fdc1 {
- 0% {
-  transform: rotate(45deg) rotateX(-25deg) rotateY(25deg);
- }
-
- 50% {
-  transform: rotate(45deg) rotateX(-385deg) rotateY(25deg);
- }
-
- 100% {
-  transform: rotate(45deg) rotateX(-385deg) rotateY(385deg);
- }
-}
-                                                </style>
-                                            <p class="ask-botanist-form_form__sum__IFJt_">
-                                                ResNet Trained on PlantVillage Dataset ,  Upload an image to the Django web service serving the classification model and then predict.
-                                            </p>
-                                            <button class="flex bg-transparent items-center justify-center rounded-[30px] cursor-pointer min-w-[196px] w-full text-18 border-none bg-gradient-to-r from-[#04BF94] to-[#52C8AD] border text-white border-primary shadow-xl hover:shadow-lg shadow-[#0000000D] hover:bg-gradient-to-r hover:from-[#06D3A4] hover:to-[#60E7C8] disabled:opacity-70 disabled:cursor-not-allowed ask-botanist-form_form__button__Q_j_l" type="submit" value="">
-                                                <span class="px-4 py-3 font-semibold">process</span>
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </section>
+                        <!DOCTYPE html>
+                        <html lang="en">
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                            <title>Image Classification</title>
+                        </head>
+                        <body>
+                            <h1>Upload an Image for Classification</h1>
+                            <form method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <input type="file" name="myfile" required>
+                                <button type="submit">Upload</button>
+                            </form>
+                        
+                            {% if predictions %}
+                                <h2>Predictions:</h2>
+                                <ul>
+                                    {% for prediction in predictions %}
+                                        <li>{{ prediction.pred }}</li>
+                                    {% endfor %}
+                                </ul>
+                                {% if url %}
+                                    <p>File uploaded to: <a href="{{ url }}">{{ url }}</a></p>
+                                {% endif %}
+                            {% endif %}
+                        </body>
+                        </html>
+                        
                         {% include 'bot.html' %}
                     </main>
                   
