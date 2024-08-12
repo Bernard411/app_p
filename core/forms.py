@@ -58,3 +58,9 @@ class PlantDiagnosisForm(forms.Form):
     pest_presence = forms.BooleanField(required=False, label='Pest Presence')
     fertilizer_use = forms.CharField(max_length=100, required=False, label='Fertilizer Use')
     # Add more fields as necessary
+
+from django import forms
+
+class PlantDiseaseForm_x(forms.Form):
+    description = forms.CharField(widget=forms.Textarea, required=True, label='Describe the issue with the plant')
+    image = forms.ImageField(required=True, label='Upload an image of the plant')

@@ -47,32 +47,44 @@ from django.core.files.storage import FileSystemStorage
 
 
 # Create your views here.
+from django.shortcuts import render
+from django.core.files.storage import FileSystemStorage
+from .forms import PlantDiseaseForm_x
+from .dl_model.model import classify_image  # Adjust the import based on your project structure
+
 def datasets(request):
-    if request.method == "GET":
-        return render(request, 'vision.html')
     if request.method == 'POST':
-        # Access the input (image) stream and keep it in the Filestorage
-        unploaded_file = request.FILES['myfile']
-        #convert the file to bytes
-        image = unploaded_file.read()
-        # predict the class of the image
-        result = classify_image(image)
-        #Select the top three predictions according to their probabilities
-        top1 = '1. Species: %s, Status: %s, Probability: %.4f'%(result[0][0], result[0][1], result[0][2])
-        top2 = '2. Species: %s, Status: %s, Probability: %.4f'%(result[1][0], result[1][1], result[1][2])
-        top3 = '3. Species: %s, Status: %s, Probability: %.4f'%(result[2][0], result[2][1], result[2][2])
+        form = PlantDiseaseForm_x(request.POST, request.FILES)
+        if form.is_valid():
+            description = form.cleaned_data['description']
+            image = form.cleaned_data['image']
+            
+            # Convert the image file to bytes
+            image_bytes = image.read()
+            
+            # Predict the class of the image
+            result = classify_image(image_bytes)
+            
+            # Select the top three predictions according to their probabilities
+            top1 = '1. Species: %s, Status: %s, Probability: %.4f' % (result[0][0], result[0][1], result[0][2])
+            top2 = '2. Species: %s, Status: %s, Probability: %.4f' % (result[1][0], result[1][1], result[1][2])
+            top3 = '3. Species: %s, Status: %s, Probability: %.4f' % (result[2][0], result[2][1], result[2][2])
 
-        predictions = [ { 'pred':top1 }, { 'pred':top2 }, { 'pred':top3 } ]
-        context = { 'predictions':predictions }
+            predictions = [{'pred': top1}, {'pred': top2}, {'pred': top3}]
+            context = {'predictions': predictions, 'description': description}
+            
+            # Save the file to ./media
+            fs = FileSystemStorage()
+            filename = fs.save(image.name, image)
+            uploaded_file_url = fs.url(filename)
+            context['url'] = uploaded_file_url
 
-        # ## In addition to image classification, Let's store the predicted filecd
-        # # Save the file to ./media
-        fs = FileSystemStorage()
-        filename = fs.save(unploaded_file.name, unploaded_file)
-        uploaded_file_url = fs.url(filename)
-        context['url'] = uploaded_file_url
+            return render(request, 'vision.html', context)
+    else:
+        form = PlantDiseaseForm_x()
 
-        return render(request, 'vision.html', context)
+    return render(request, 'vision.html', {'form': form})
+
   
 
 from django.shortcuts import render
