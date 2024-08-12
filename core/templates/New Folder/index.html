@@ -321,7 +321,7 @@
           <body>
               <span style="font-weight: bold; font-size: large;">Plant Diagnosis</span>
               <div class="clontainer" style="background-color: white; border-radius: 10px;">
-                  <div class="form-ckontainer" style="margin: 10px; margin-top: 20px;">
+              <div class="form-ckontainer" style="margin: 10px; margin-top: 20px;">
                       <form method="post" style="background-color: #010105; width: 100%;">
                           {% csrf_token %}
                           <p>
@@ -351,7 +351,7 @@
                           <!-- Add more fields as necessary -->
                           <button class="buttton" type="submit">Diagnose</button>
                       </form>
-                  </div>
+                  </div>    
                   <br>
                   {% if diagnosis_result %}
                       <div class="result-container" style="color: #000000;">
